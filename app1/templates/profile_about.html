@@ -1,0 +1,108 @@
+{% extends 'profile.html' %}
+{% block content %}
+{% load static %}
+
+<body>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'app1/css/test.css' %}">
+
+{% if update %}
+    <h4 class = "ml-4">Update Form</h4>
+
+
+    <form class="ml-4 mt-4" id="update_data" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+        </form>
+        <a href="{% url 'home' %}"><button form = "update_data" type="submit"
+                                                class="btn btn-primary ml-4 mt-4">Apply</button></a>
+
+{% else %}
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5 class="mb-4">
+                                       Profile
+                                    </h5>
+
+                            <ul class="nav nav-tabs mt-4    " id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Products</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.id}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.username}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.email}}</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                       <div class="row">
+                                           {% for i in get_product %}
+                                           {% if request.user == i.author %}
+                                          <div class="col-sm-6">
+                                            <div class="card mt-4">
+                                              <div class="card-body">
+                                                <h5 class="card-title">{{i.name}}</h5>
+                                                <p class="card-text " align="center">{{i.text|truncatechars:30}}</p>
+                                                <a href="detail/{{i.id}}" class="btn btn-primary">Detail</a>
+                                                <a href="{% url 'update_page' i.id %}" class="btn btn-primary ml-4"> Update</a>
+                     <form action="{% url 'delete_page' i.id %}" method="post" onSubmit='return confirm("Для удаления нажмите OK?");' >{% csrf_token %}
+                    <a href="{% url 'delete_page' i.id %}" ><input class="btn btn-primary ml-4" type="submit" value="Delete">
+                        </a>
+                    </form>
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                           {% endif %}
+                                           {% endfor %}
+                                        </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+{% endif %}
+</body>
+{% endblock %}

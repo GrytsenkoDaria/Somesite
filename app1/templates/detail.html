@@ -1,0 +1,9 @@
+{% extends 'home.html' %}
+
+    {% block content%}
+
+    <h2 class="col-sm-9 " align="center">{{ get_product.name }}</h2>
+    <p class="mt-4">&emsp; {{ get_product.text }}</p>
+    <img class="card-img-top" src = '{{ get_product.image.url }}' alt="">
+
+    {% endblock %}

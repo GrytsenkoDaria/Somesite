@@ -1,0 +1,41 @@
+# Environments 
+.env 
+.venv 
+env/ 
+venv/ 
+ENV/ 
+env.bak/ 
+venv.bak/ 
+
+# Visual Studio Code # 
+.vscode/* 
+.history
+
+# PyCharm # 
+.idea/
+*.iws /out/
+
+# Python #
+__pycache__
+*.py[cod]
+.python-version
+/sourse_data_json.txt
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+*db.sqlite3
+db.sqlite3-journal
+media
+*.sqlite3
+*.DS_Store
+._*
+lib*
+bin
+pyvenv.cfg
+
+# Migrations
+migrations
